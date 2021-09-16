@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Shuvani/tolst-dev-server#readme",
   "dependencies": {
+    "@tri-tolstiaka/templates": "^1.0.0",
     "express": "^4.17.1"
   }
 }

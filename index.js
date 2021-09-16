@@ -1,25 +1,39 @@
-const { response } = require('express')
-const express = require('express')
+const { response } = require("express");
+const express = require("express");
 
-const get_module_name = require('./utils/module_name')
+const get_module_name = require("./utils/module_name");
+const applyHbs = require("@tri-tolstiaka/templates");
 
-const app = express()
+const app = express();
 
 const startServer = ({ port }) => {
-    const moduleName = get_module_name()
-    const appPath = `/${moduleName}`
+	const moduleName = get_module_name();
+	const appPath = `/${moduleName}`;
+	applyHbs(app);
+	app.get(appPath, (request, response) => {
+		// cnfiguration is now copypasted from templates/start.js
+		response.render("index", {
+			title: "My app",
+			apps: JSON.stringify({
+				foo: {
+					version: "1.0.0",
+					name: "foo",
+				},
+			}),
+			// all pages and sub-pages
+			navigations: JSON.stringify({
+				"dummy.main": "/dummy",
+				"dummy.login": "dummy/login",
+			}),
+			config: JSON.stringify({}),
+			baseUrl: "/static",
+			fireAppVersion: "0.0.2",
+		});
+	});
 
-    app.get(appPath, (request, response) => {
-        response.send(`
-            <body>
-                <h1>Hello ${moduleName}</h1>
-            </body>
-        `)
-    })
+	app.listen(port, () => {
+		console.log(`server started at http://localhost:${port}${appPath}`);
+	});
+};
 
-    app.listen(port, () => {
-        console.log(`server started at http://localhost:${port}${appPath}`)
-    })
-}
-
-module.exports = startServer
+module.exports = startServer;
