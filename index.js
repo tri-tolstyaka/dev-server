@@ -5,11 +5,13 @@ const get_module_name = require("./utils/module_name");
 const applyHbs = require("@tri-tolstiaka/templates");
 
 const app = express();
+const baseUrl = "/static";
 
 const startServer = ({ port }) => {
 	const moduleName = get_module_name();
 	const appPath = `/${moduleName}`;
 	applyHbs(app);
+
 	app.get(appPath, (request, response) => {
 		// cnfiguration is now copypasted from templates/start.js
 		response.render("index", {
@@ -17,7 +19,6 @@ const startServer = ({ port }) => {
 			apps: JSON.stringify({
 				foo: {
 					version: "1.0.0",
-					name: "foo",
 				},
 			}),
 			// all pages and sub-pages
@@ -30,6 +31,13 @@ const startServer = ({ port }) => {
 			fireAppVersion: "0.0.2",
 		});
 	});
+
+	app.use(
+		baseUrl,
+		express.Router().get(/\/([\w.-_]+)\/([\w\d.])\/(.*)/, (req, res) => {
+			console.log(req.params);
+		})
+	);
 
 	app.listen(port, () => {
 		console.log(`server started at http://localhost:${port}${appPath}`);
