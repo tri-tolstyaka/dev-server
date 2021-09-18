@@ -38,10 +38,6 @@ const startServer = ({ port }) => {
 
 	app.use(
 		baseUrl,
-		(req, res, next) => {
-			console.log("rq", req);
-			next();
-		},
 		express.Router().get(/\/([._-\w]+)\/([\w\d._-]+)\/(.*)/, (req, res) => {
 			console.log("target response", req.params);
 		})
