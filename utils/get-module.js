@@ -9,12 +9,14 @@ module.exports = (req, res) => {
 	const libVersion = req.params[1];
 	const libFilePath = req.params[2];
 
-	// If you are using npm links locally, then the search shoulf be in the root node_modules
-	// if (libName === "fire.app") {
-	// filePath = getModulePath("@tri-tolstiaka/fire.app", `dist/${libFilePath}`);
-	// } else {...}
-	// usual case
-	let filePath = path.resolve("node_modules", libName, libFilePath);
+	let filePath;
+	if (libName === "fire.app") {
+		// If you are using npm links locally, then the search should be in the root node_modules
+		filePath = getModulePath("@tri-tolstiaka/fire.app", `dist/${libFilePath}`);
+	} else {
+		// usual case
+		filePath = path.resolve("node_modules", libName, libFilePath);
+	}
 
-	filePath = res.sendFile();
+	res.sendFile(filePath);
 };

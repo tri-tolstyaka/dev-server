@@ -28,7 +28,7 @@ const startServer = ({ port }) => {
 		module: {
 			rules: [
 				{
-					test: /\.tsx?s/,
+					test: /\.tsx?$/,
 					loader: "ts-loader",
 				},
 			],
@@ -42,7 +42,7 @@ const startServer = ({ port }) => {
 	);
 
 	app.get(appPath, (request, response) => {
-		// cnfiguration is now copypasted from templates/start.js
+		// configuration is now copypasted from templates/start.js
 		response.render("index", {
 			title: "Our app: Tri-Tolstiaka",
 			apps: JSON.stringify({
