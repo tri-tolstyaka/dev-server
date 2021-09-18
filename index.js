@@ -42,8 +42,8 @@ const startServer = ({ port }) => {
 			console.log("rq", req);
 			next();
 		},
-		express.Router().get(/\/([\w.-_]+)\/([-\w\d.])\/(.*)/, (req, res) => {
-			console.log(req.params);
+		express.Router().get(/\/([._-\w]+)\/([\w\d._-]+)\/(.*)/, (req, res) => {
+			console.log("target response", req.params);
 		})
 	);
 };
