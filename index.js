@@ -1,8 +1,11 @@
 const { response } = require("express");
 const express = require("express");
-
+const webpack = require("webpack");
+const webpackDevMiddleware = require("webpack-dev-middleware");
 const get_module_name = require("./utils/module_name");
 const applyHbs = require("@tri-tolstiaka/templates");
+const path = require("path");
+const { output } = require("../fire.app/webpack.config");
 
 const app = express();
 const baseUrl = "/static";
@@ -12,18 +15,46 @@ const startServer = ({ port }) => {
 	const appPath = `/${moduleName}`;
 	applyHbs(app);
 
+	const compiler = webpack({
+		mode: "development",
+		entry: "./src/index.tsx",
+		output: {
+			filename: "[name].js",
+			path: path.resolve("dist"),
+			libraryTarget: "umd",
+			publicPath: "/static/dummy/1.0.0/",
+		},
+		resolve: {
+			extensions: [".tsx", ".js", ".jsx", ".ts", ".json"],
+		},
+		module: {
+			rules: [
+				{
+					test: /\.tsx?s/,
+					loader: "ts-loader",
+				},
+			],
+		},
+	});
+
+	app.use(
+		webpackDevMiddleware(compiler, {
+			publicPath: "/static/dummy/1.0.0/",
+		})
+	);
+
 	app.get(appPath, (request, response) => {
 		// cnfiguration is now copypasted from templates/start.js
 		response.render("index", {
-			title: "My app",
+			title: "Our app: Tri-Tolstiaka",
 			apps: JSON.stringify({
-				foo: {
+				[moduleName]: {
 					version: "1.0.0",
 				},
 			}),
 			// all pages and sub-pages
 			navigations: JSON.stringify({
-				"dummy.main": "/dummy",
+				[moduleName]: appPath,
 				"dummy.login": "dummy/login",
 			}),
 			config: JSON.stringify({}),
@@ -38,9 +69,12 @@ const startServer = ({ port }) => {
 
 	app.use(
 		baseUrl,
-		express.Router().get(/\/([._-\w]+)\/([\w\d._-]+)\/(.*)/, (req, res) => {
-			console.log("target response", req.params);
-		})
+		express
+			.Router()
+			.get(
+				/\/([._-\w]+)\/([\w\d._-]+)\/(.*)/,
+				require("./utils/get-module")
+			)
 	);
 };
 
