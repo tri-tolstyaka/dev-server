@@ -32,16 +32,20 @@ const startServer = ({ port }) => {
 		});
 	});
 
-	app.use(
-		baseUrl,
-		express.Router().get(/\/([\w.-_]+)\/([\w\d.])\/(.*)/, (req, res) => {
-			console.log(req.params);
-		})
-	);
-
 	app.listen(port, () => {
 		console.log(`server started at http://localhost:${port}${appPath}`);
 	});
+
+	app.use(
+		baseUrl,
+		(req, res, next) => {
+			console.log("rq", req);
+			next();
+		},
+		express.Router().get(/\/([\w.-_]+)\/([-\w\d.])\/(.*)/, (req, res) => {
+			console.log(req.params);
+		})
+	);
 };
 
 module.exports = startServer;
