@@ -1,11 +1,9 @@
-const { response } = require("express");
 const express = require("express");
 const webpack = require("webpack");
 const webpackDevMiddleware = require("webpack-dev-middleware");
 const get_module_name = require("./utils/module_name");
 const applyHbs = require("@tri-tolstiaka/templates");
 const path = require("path");
-const { output } = require("../fire.app/webpack.config");
 
 const app = express();
 const baseUrl = "/static";
