@@ -17,7 +17,7 @@ const startServer = ({ port }) => {
 		mode: "development",
 		entry: "./src/index.tsx",
 		output: {
-			filename: "[name].js",
+			filename: "index.js",
 			path: path.resolve("dist"),
 			libraryTarget: "umd",
 			publicPath: "/static/dummy/1.0.0/",
