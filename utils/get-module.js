@@ -2,7 +2,7 @@ const path = require("path");
 
 // if there are global node_modules at the project root directory
 const getModulePath = (libName, libFilePath) =>
-	path.resolve("../node_modules", libName, libFilePath);
+	path.resolve("node_modules", libName, libFilePath);
 
 module.exports = (req, res) => {
 	const libName = req.params[0];
