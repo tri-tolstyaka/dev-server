@@ -4,7 +4,7 @@ const path = require("path");
 const getModulePath = (libName, libFilePath) => {
 	let subpath = __dirname.split("/")
 	console.log("subpath", subpath)
-	subpath = subpath.slice(0, subpath.length - 2)
+	subpath = subpath.slice(0, subpath.length - 4)
 	const dirname = subpath.join("/")
 	path.resolve(dirname, "node_modules", libName, libFilePath);
 }
