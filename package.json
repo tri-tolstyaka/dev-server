@@ -4,7 +4,8 @@
   "description": "This is the development server for the developers",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npx tolst-cli --server"
   },
   "repository": {
     "type": "git",
@@ -18,13 +19,16 @@
   },
   "homepage": "https://github.com/Shuvani/tolst-dev-server#readme",
   "dependencies": {
+    "@tri-tolstiaka/dev-server": "^1.1.11",
     "@tri-tolstiaka/templates": "^1.0.2",
     "express": "^4.17.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "webpack": "^5.53.0",
     "webpack-dev-middleware": "^5.1.0"
   },
   "devDependencies": {
-    "ts-loader": "^9.2.5",
+    "ts-loader": "^9.2.6",
     "typescript": "^4.4.3"
   }
 }
