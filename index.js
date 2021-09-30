@@ -1,26 +1,26 @@
+const path = require("path");
 const express = require("express");
 const webpack = require("webpack");
 const applyHbs = require("@tri-tolstiaka/templates");
+const getModuleData = require("./utils/module-data");
 const webpackDevMiddleware = require("webpack-dev-middleware");
-const get_module_name = require("./utils/module_name");
-const path = require("path");
 
 const app = express();
 const baseUrl = "/static";
 
 const startServer = ({ port }) => {
-	const moduleName = get_module_name();
-	const appPath = `/${moduleName}`;
+	const moduleData = getModuleData();
+	const appPath = `/${moduleData.name}`;
 	applyHbs(app);
 
 	const compiler = webpack({
 		mode: "development",
-		entry: "./src/index.tsx",
+		entry: moduleData.entryPoint,
 		output: {
 			filename: "index.js",
 			path: path.resolve("dist"),
 			libraryTarget: "umd",
-			publicPath: "/static/dummy/1.0.0/",
+			publicPath: `/static/${moduleData.name}/1.0.0/`,
 		},
 		resolve: {
 			extensions: [".tsx", ".js", ".jsx", ".ts", ".json"],
@@ -37,7 +37,7 @@ const startServer = ({ port }) => {
 
 	app.use(
 		webpackDevMiddleware(compiler, {
-			publicPath: "/static/dummy/1.0.0/",
+			publicPath: `/static/${moduleData.name}/1.0.0/`,
 		})
 	);
 
@@ -46,13 +46,13 @@ const startServer = ({ port }) => {
 		res.render("index", {
 			title: "Tri tolstiaka",
 			apps: JSON.stringify({
-				[moduleName]: {
+				[moduleData.name]: {
 					version: "1.0.0",
 				},
 			}),
 			// all pages and sub-pages
 			navigations: JSON.stringify({
-				[moduleName]: appPath,
+				[moduleData.name]: appPath,
 				"dummy.login": "dummy/login",
 			}),
 			config: JSON.stringify({}),
