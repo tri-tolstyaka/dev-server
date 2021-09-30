@@ -1,5 +1,6 @@
 const express = require("express");
 const webpack = require("webpack");
+const applyHbs = require("@tri-tolstiaka/templates");
 const webpackDevMiddleware = require("webpack-dev-middleware");
 const get_module_name = require("./utils/module_name");
 const applyHbs = require("@tri-tolstiaka/templates");
@@ -41,10 +42,10 @@ const startServer = ({ port }) => {
 		})
 	);
 
-	app.get(appPath, (request, response) => {
+	app.get(appPath, (req, res) => {
 		// configuration is now copypasted from templates/start.js
-		response.render("index", {
-			title: "Our app: Tri-Tolstiaka",
+		res.render("index", {
+			title: "Tri tolstiaka",
 			apps: JSON.stringify({
 				[moduleName]: {
 					version: "1.0.0",
