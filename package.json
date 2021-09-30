@@ -1,6 +1,6 @@
 {
   "name": "@tri-tolstiaka/dev-server",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "This is the development server for the developers",
   "main": "index.js",
   "scripts": {
