@@ -19,6 +19,7 @@
   "homepage": "https://github.com/Shuvani/tolst-dev-server#readme",
   "dependencies": {
     "@tri-tolstiaka/templates": "^2.0.0",
+    "@tri-tolstiaka/webpack-config": "^1.0.0",
     "express": "^4.17.1",
     "webpack-dev-middleware": "^5.1.0"
   },
