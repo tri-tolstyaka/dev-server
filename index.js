@@ -3,7 +3,6 @@ const webpack = require("webpack");
 const applyHbs = require("@tri-tolstiaka/templates");
 const webpackDevMiddleware = require("webpack-dev-middleware");
 const get_module_name = require("./utils/module_name");
-const applyHbs = require("@tri-tolstiaka/templates");
 const path = require("path");
 
 const app = express();
