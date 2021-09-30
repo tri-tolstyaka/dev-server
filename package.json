@@ -20,7 +20,7 @@
   "homepage": "https://github.com/Shuvani/tolst-dev-server#readme",
   "dependencies": {
     "@tri-tolstiaka/dev-server": "^1.1.11",
-    "@tri-tolstiaka/templates": "^1.0.4",
+    "@tri-tolstiaka/templates": "^1.0.5",
     "express": "^4.17.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
