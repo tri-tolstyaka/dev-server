@@ -74,7 +74,7 @@ const startServer = ({ port }) => {
 				"dummy.login": "dummy/login",
 			}),
 			config: JSON.stringify({ ...(config.config || {}) }),
-			features: { ...(config.features || {}) },
+			features: JSON.stringify({ ...(config.features || {}) }),
 		});
 	});
 
