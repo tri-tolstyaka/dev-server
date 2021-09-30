@@ -4,6 +4,7 @@ const webpack = require("webpack");
 const applyHbs = require("@tri-tolstiaka/templates");
 const getModuleData = require("./utils/module-data");
 const webpackDevMiddleware = require("webpack-dev-middleware");
+const getModuleConfig = require('./utils/get-module-config')
 
 const app = express();
 const baseUrl = "/static";
@@ -52,23 +53,28 @@ const startServer = ({ port }) => {
 		})
 	);
 
+	const config = getModuleConfig();
+
 	app.get(appPath, (req, res) => {
 		// configuration is now copypasted from templates/start.js
 		res.render("index", {
+			baseUrl: "/static",
+			fireAppVersion: "0.0.2",
 			title: "Tri tolstiaka",
 			apps: JSON.stringify({
+				...(config.app || {}),
 				[moduleData.name]: {
 					version: "1.0.0",
 				},
 			}),
 			// all pages and sub-pages
 			navigations: JSON.stringify({
+				...(config.navigations || {}),
 				[moduleData.name]: appPath,
 				"dummy.login": "dummy/login",
 			}),
-			config: JSON.stringify({}),
-			baseUrl: "/static",
-			fireAppVersion: "0.0.2",
+			config: JSON.stringify({ ...(config.config || {}) }),
+			features: { ...(config.features || {}) },
 		});
 	});
 
